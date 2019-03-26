@@ -69,7 +69,7 @@ Compiling a Liquidity file
 --------------------------
 
 Let's take a very simple Liquidity contract, stored in a file ``simple.liq``::
-  
+
   [%%version 0.4]
 
   type storage = int
@@ -88,7 +88,7 @@ To compile the file, we can use::
     tezos-client typecheck script simple.tz
 
 The ``liquidity`` compiler will try to compile any file with a ``.liq`` extension provided on the command line.
-    
+
 Let's have a look at the generated ``simple.tz`` file::
 
   parameter int;
@@ -108,11 +108,11 @@ Note that we can use a more compact version, on a single line::
   File "simple.tz" generated
   If tezos is compiled, you may want to typecheck with:
     tezos-client typecheck script simple.tz
-  
+
    ─➤ cat simple.tz
   parameter int; storage int; code { DUP ; DIP { CDR } ; CAR ; DUP ; SWAP ; DROP ; SWAP ; ADD ; NIL operation ; PAIR };
 
-  
+
 In case of error, for example if we set the storage to type ``nat`` instead of ``int``, the compiler will provide the location of the error in a standard format::
 
   ─➤ liquidity simple.liq
@@ -144,7 +144,7 @@ Let's decompile the ``simple.tz`` file from the previous section::
   File "simple.tz.liq" generated
 
 We can now check the result of the decompilation::
-  
+
   ─➤ cat simple.tz.liq
   [%%version 0.4]
   type storage = int
@@ -154,7 +154,7 @@ We can now check the result of the decompilation::
 
 The ``liquidity`` tool will decompile in the same way any file with
 the ``.tz`` extension provided on the command line.
-      
+
 Relevant options:
   --verbose                Increment verbosity
 
@@ -257,7 +257,7 @@ Using the default client we can then sign this operation with an
 account ``my_account`` on an offline machine. If this accounts
 corresponds to a hardware wallet (like a ledger nano S) in the tezos
 client, you will be required to confirm the signature. If this
-accounts in an encrypted private key you will be asked to input your
+account is in an encrypted private key you will be asked to input your
 password::
 
   > tezos-client sign bytes 0x03$(cat ./my_op.bytes) for my_account
@@ -265,7 +265,7 @@ password::
   Signature: edsigtzxo2Q7wFiEjausSp7pKUXLK9PnPqf8rHEKdc18HtNVbZSg5WJyFJwk14w7mykCsq3nV5iB6Eo4gTX3y8Dv8tkn1EadRj7
 
 Save this signature. You can now inject the signed operation on the
-Tezos newtork by simply issuing::
+Tezos network by simply issuing::
 
   > liquidity \
      --tezos-node http://127.0.0.1:8732 \
@@ -280,18 +280,18 @@ Relevant options:
     --counter N              Set the counter for the operation instead of retrieving it
     --tezos-node <addr:port>  Set the address and port of a Tezos node to run or deploy contracts (default: 127.0.0.1:8732)
     --protocol                Specify protocol (mainnet, zeronet, alphanet) (detect if not specified)
-    --delegatable             With --[forge-]deploy, deploy a delegatable contract
-    --spendable               With --[forge-]deploy, deploy a spendable contract
+    --delegatable             With ``--[forge-]deploy``, deploy a delegatable contract
+    --spendable               With ``--[forge-]deploy``, deploy a spendable contract
     --forge-deploy <INPUTS>   Forge deployment operation for contract
     --deploy <INPUTS>         Deploy contract
     --signature <SIGNATURE>     Set the signature for an operation
-    --inject <OPERATION.bytes>        Inject a sign operation
+    --inject <OPERATION.bytes>        Inject an operation to sign
 
 Calling a contract
 ~~~~~~~~~~~~~~~~~~
 
 To call an already deployed smart contract you need to forge a
-transfer operation, sign this operation ans inject it to a Tezos
+transfer operation, sign this operation and inject it to a Tezos
 node. This can be performed separately or all at once with the command
 ``--call``.
 
@@ -319,7 +319,7 @@ Calling a contract with an offline signature
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The preferred way to proceed is to do this operation in three separate
-phase, the second one being the offline signature.
+phases, the second one being the offline signature.
 
 First we need to produce (forge) an unsigned serialized deployment
 operation::
@@ -339,7 +339,7 @@ operation::
   Signature:edsigu1xkB6tC2Sm39QaGtAzPbjdfWF7V9ctNVwGVH52zrmus921eVmdga2nZowGkF9HSagMNsw6ZaZ8xoKvvhyFgfgirR9Wuow
 
 Save this signature. You can now inject the signed operation on the
-Tezos newtork by simply issuing::
+Tezos network by simply issuing::
 
   > liquidity \
       --tezos-node http://zeronet-node.tzscan.io \
@@ -359,7 +359,7 @@ Relevant options:
     --call <KT1... ENTRY PARAMETER>  Call deployed contract
     --forge-call <KT1... ENTRY PARAMETER>  Forge call transaction operation
     --signature <SIGNATURE>     Set the signature for an operation
-    --inject <OPERATION.bytes>        Inject a sign operation
+    --inject <OPERATION.bytes>        Inject an operation to sign
 
 Generating initial storage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

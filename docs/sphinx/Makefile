@@ -2,7 +2,7 @@ SPHINXBUILD   = sphinx-build
 SPHINXOPTS    = -aE -n
 SOURCEDIR     = src
 
-sources := $(shell find $(SOURCEDIR) -type f) Makefile ../../.git/logs/HEAD $(SOURCEDIR)/reference/michelson.rst
+sources := $(shell find $(SOURCEDIR) -type f) Makefile ../../.git/logs/HEAD $(SOURCEDIR)/reference/liquidity.rst
 
 all: html pdf epub
 

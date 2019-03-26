@@ -7,7 +7,7 @@ Contract Format
 All the contracts have the following form::
 
  [%%version 0.4]
- 
+
  <... local declarations ...>
 
  type storage = TYPE
@@ -17,7 +17,7 @@ All the contracts have the following form::
      (y : TYPE)
      ... =
      BODY
- 
+
  let%entry entrypoint1
      (p1 : TYPE)
      (s1 : TYPE) =
@@ -99,7 +99,7 @@ The built-in base types are:
 
 Composite Types
 ~~~~~~~~~~~~~~~
-  
+
 Types can be composed using the following type operators:
 
 - tuples: noted ``t1 * t2``, ``t1 * t2 * t3``, etc.
@@ -107,7 +107,7 @@ Types can be composed using the following type operators:
   ``'b``, equivalent to ``('a, 'b) lambda``.
 
 and the following predefined combinators:
-  
+
 - lists: ``'a list`` is the type of lists of elements in ``'a``
 - sets: ``'a set`` is the type of sets of elements in ``'a`` (``'a`` must be a comparable type)
 - maps: ``('key, 'val) map`` is the type of maps whose keys are of type
@@ -117,7 +117,7 @@ and the following predefined combinators:
   type) and values of type ``'val``;
 - contracts: ``S.instance`` is the type of contracts (instances) of signature
   ``S`` (see `Contract Types and Signatures`_);
-  
+
 and the predefined algebraic data types:
 
 - option type: ``'a option = None | Some of 'a``
@@ -221,7 +221,7 @@ There are two kinds of primitives in the language:
   arguments: ``prim x y z``. All alphanumerical primitives are prefix
   primitives, except ``lor``, ``lxor``, ``mod``, ``land``, ``lsl``,
   ``lsr`` and ``asr``.
-* **Infix primitves** are used by putting the primitive between the
+* **Infix primitives** are used by putting the primitive between the
   arguments: ``x prim y``. Infix primitives are always operators
   (``+``, ``-``, etc.).
 
@@ -401,23 +401,23 @@ Operations on numeric values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * ``+``: Addition. With the following types:
-  
+
   * ``tez -> tez -> tez``
   * ``nat -> nat -> nat``
   * ``int|nat -> int|nat -> int``
   * ``timestamp -> int|nat -> timestamp``
   * ``int|nat -> timestamp -> timestamp``
-    
+
     It is translated to ``ADD`` in Michelson.
-    
-* ``-``: Substraction. With the following types:
-  
+
+* ``-``: Subtraction. With the following types:
+
   * ``tez -> tez -> tez``
   * ``int|nat -> int|nat -> int``
   * ``timestamp -> int|nat -> timestamp``
   * ``timestamp -> timestamp -> int``
   * ``int|nat -> int`` (unary negation)
-  
+
     It is translated to ``SUB`` (or ``NEG`` for unary negation) in
     Michelson.
 
@@ -440,37 +440,37 @@ Operations on numeric values
   * ``int|nat -> int|nat -> ( int *  nat ) option``
   * ``tez -> nat -> ( tez * tez ) option``
   * ``tez -> tez -> ( nat * tez ) option``
-  
+
     It is translated to ``EDIV`` in Michelson.
 
     .. tryliquidity:: ../../../../tests/doc/doc11.liq
     .. literalinclude:: ../../../../tests/doc/doc11.liq
 
 * ``~-``: Negation. Type: ``int|nat -> int``
-  
+
     It is translated to ``NEG`` in Michelson.
-  
+
 * ``lor``, ``or`` and ``||``: logical OR with the following types:
 
   * ``bool -> bool -> bool``
   * ``nat -> nat -> nat``
-  
+
     It is translated to ``OR`` in Michelson.
-    
+
 * ``&``, ``land`` and ``&&``: logical AND with the following types:
 
   * ``bool -> bool -> bool``
   * ``nat|int -> nat -> nat``
-  
+
     It is translated to ``AND`` in Michelson.
 
 * ``lxor``, ``xor``: logical exclusive OR with the following types:
 
   * ``bool -> bool -> bool``
   * ``nat -> nat -> nat``
-  
+
     It is translated to ``XOR`` in Michelson.
-    
+
 * ``not``: logical NOT
 
   * ``bool -> bool``
@@ -536,7 +536,7 @@ Operations on contracts
 
 * ``Account.create: manager:key_hash -> delegate:key_hash option ->
   delegatable:bool -> amount:tez -> operation * address``. Forge an
-  operation to create a new (originated) account and returns its
+  operation to create a new (originated) account and return its
   address. It is translated to ``CREATE_ACCOUNT`` in
   Michelson. Arguments can be labeled, in which case they can be given
   in any order.
@@ -546,7 +546,7 @@ Operations on contracts
 
 * ``Account.default: key_hash -> UnitContract.instance``. Returns
   the contract associated to the given ``key_hash``. Since this
-  contract is not originated, it cannot contains code, so transfers to
+  contract is not originated, it cannot contain code, so transfers to
   it cannot fail. It is translated to ``IMPLICIT_ACCOUNT`` in
   Michelson.
 
@@ -577,7 +577,7 @@ Operations on contracts
   .. tryliquidity:: ../../../../tests/doc/doc20.liq
   .. literalinclude:: ../../../../tests/doc/doc20.liq
 
-    
+
 * ``Contract.self: unit -> _.instance``. Returns the current
   executing contract. It is translated to ``SELF`` in Michelson.
 
@@ -592,7 +592,7 @@ Operations on contracts
   transaction. Note that the code must be specified as a contract
   structure (inlined or not). It is translated to ``CREATE_CONTRACT``
   in Michelson.  ``Contract.create manager delegate_opt spendable
-  delegatable initial_amount initial_storage (contract C)`` forges an
+  delegatable initial_amount initial_storage (contract C)`` forges
   an origination operation for contract `C` with manager ``manager``,
   optional delegate ``delegate``, Boolean spendable flag
   ``spendable``, Boolean delegatable flag ``delegatable``, initial
@@ -609,10 +609,10 @@ Operations on contracts
   .. tryliquidity:: ../../../../tests/doc/doc23.liq
   .. literalinclude:: ../../../../tests/doc/doc23.liq
 
-    
+
 Cryptographic operations
 ~~~~~~~~~~~~~~~~~~~~~~~~
-              
+
 * ``Crypto.blake2b: bytes -> bytes``. Computes the cryptographic hash of
   a bytes with the cryptographic Blake2b function. It is translated to
   ``BLAKE2B`` in Michelson.
@@ -632,7 +632,7 @@ Cryptographic operations
 
   .. tryliquidity:: ../../../../tests/doc/doc26.liq
   .. literalinclude:: ../../../../tests/doc/doc26.liq
-  
+
 * ``Crypto.hash_key: key -> key_hash``. Hash a public key and encode
   the hash in B58check. It is translated to ``HASH_KEY`` in Michelson.
 
@@ -647,10 +647,10 @@ Cryptographic operations
 
   .. tryliquidity:: ../../../../tests/doc/doc28.liq
   .. literalinclude:: ../../../../tests/doc/doc28.liq
-  
+
 Operations on bytes
 ~~~~~~~~~~~~~~~~~~~
-              
+
 * ``Bytes.pack: 'a -> bytes``. Serialize any data to a binary
   representation in a sequence of bytes. It is translated to ``PACK``
   in Michelson.
@@ -739,13 +739,13 @@ Operations on lambdas
 ~~~~~~~~~~~~~~~~~~~~~
 
 * ``Lambda.pipe`` or ``( |> )`` of type ``'a -> ('a -> 'b) -> 'b`` or ``'a
-  -> ('a,'b) closure -> 'b``. Applies a function or closure to its
+  -> ('a,'b) closure -> 'b``. Apply a function or closure to its
   argument.
 
   .. tryliquidity:: ../../../../tests/doc/doc39.liq
   .. literalinclude:: ../../../../tests/doc/doc39.liq
 
-Operations on lists              
+Operations on lists
 ~~~~~~~~~~~~~~~~~~~
 
 Lists are immutable data structures containing values (of any type)
@@ -753,14 +753,14 @@ that can only be accessed in a sequential order. Since they are
 immutable, all **modification** primitives return a new list, and the
 list given in argument is unmodified.
 
-* ``( :: ) : 'a -> 'a list -> 'a list`` Add a new element at the head
+* ``( :: ) : 'a -> 'a list -> 'a list``. Add a new element at the head
   of the list. The previous list becomes the tail of the new list.  It
   is translated to ``CONS`` in Michelson.
 
   .. tryliquidity:: ../../../../tests/doc/doc40.liq
   .. literalinclude:: ../../../../tests/doc/doc40.liq
 
-* ``List.rev : 'a list -> 'a list`` Return the list in the reverse order.
+* ``List.rev : 'a list -> 'a list``. Return the list in the reverse order.
 
   .. tryliquidity:: ../../../../tests/doc/doc41.liq
   .. literalinclude:: ../../../../tests/doc/doc41.liq
@@ -771,7 +771,7 @@ list given in argument is unmodified.
   .. tryliquidity:: ../../../../tests/doc/doc42.liq
   .. literalinclude:: ../../../../tests/doc/doc42.liq
 
-* ``List.iter: ('a -> unit) -> 'a list -> unit``. Iter the function on
+* ``List.iter: ('a -> unit) -> 'a list -> unit``. Iterate the function on
   all the elements of a list. Since no value can be returned, it can
   only be used for side effects, i.e. to fail the transaction.  It is
   translated to ``ITER`` in Michelson.
@@ -780,7 +780,7 @@ list given in argument is unmodified.
   .. literalinclude:: ../../../../tests/doc/doc43.liq
 
 * ``List.fold: ('elt * 'acc -> 'acc) -> 'elt list -> 'acc ->
-  'acc``. Iter on all elements of a list, while modifying an
+  'acc``. Iterate on all elements of a list, while modifying an
   accumulator. It is translated to ``ITER`` in Michelson.
 
   .. tryliquidity:: ../../../../tests/doc/doc44.liq
@@ -849,7 +849,7 @@ unmodified.
   on all elements of the set. Since no value can be returned, it can
   only be used for side effects, i.e. to fail the transaction.  It is
   translated to ``ITER`` in Michelson.
-  
+
   .. tryliquidity:: ../../../../tests/doc/doc52.liq
   .. literalinclude:: ../../../../tests/doc/doc52.liq
 
@@ -860,7 +860,7 @@ Maps are immutable data structures containing associations between
 keys (a comparable type) and values (any type). Since they are
 immutable, all **modification** primitives return a new updated map,
 and the map given in argument is unmodified.
-  
+
 * ``Map.add: 'key -> 'val -> ('key, 'val) map -> ('key, 'val)
   map``. Return a map with a new association between a key and a
   value. If an association previously existed for the same key, it is
@@ -900,7 +900,7 @@ and the map given in argument is unmodified.
   .. literalinclude:: ../../../../tests/doc/doc60.liq
 
 * ``Map.cardinal`` or ``Map.size`` with type ``('key,'val) map ->
-  nat``. Return the number of associations (i.e. uniq keys) in the
+  nat``. Return the number of associations (i.e. unique keys) in the
   map. It is translated to ``SIZE`` in Michelson.
 
   .. tryliquidity:: ../../../../tests/doc/doc61.liq
@@ -908,7 +908,7 @@ and the map given in argument is unmodified.
 
 * ``Map.iter: ('key * 'val -> unit) -> ('key,'val) map ->
   unit``. Apply a function on all associations in the map. Since no
-  value can be returned, it can only be used for side effects, *i.e.* to
+  value can be returned, it can only be used for side effects, i.e. to
   fail the transaction. It is translated to ``ITER`` in Michelson.
 
   .. tryliquidity:: ../../../../tests/doc/doc62.liq
@@ -938,7 +938,7 @@ and the map given in argument is unmodified.
   .. tryliquidity:: ../../../../tests/doc/doc65.liq
   .. literalinclude:: ../../../../tests/doc/doc65.liq
 
-  
+
 Operations on Big maps
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -987,15 +987,15 @@ argument (in either ``List``, ``Set``, ``Map``, ``String`` or
 ``Bytes``). However, they can be used to write some polymorphic code on
 collections.
 
-* ``Coll.update`` 
-* ``Coll.mem``    
-* ``Coll.find``   
-* ``Coll.size``   
-* ``Coll.concat`` 
-* ``Coll.slice``  
-* ``Coll.iter``   
-* ``Coll.fold``   
-* ``Coll.map``    
+* ``Coll.update``
+* ``Coll.mem``
+* ``Coll.find``
+* ``Coll.size``
+* ``Coll.concat``
+* ``Coll.slice``
+* ``Coll.iter``
+* ``Coll.fold``
+* ``Coll.map``
 * ``Coll.map_fold``
 
 
@@ -1165,10 +1165,10 @@ Liquidity supports two syntaxes:
 ReasonML Compiler Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default, the compiler uses expects the OCaml syntax, and outputs
+By default, the compiler expects the OCaml syntax, and outputs
 files in OCaml syntax. This behavior changes with the file extension
 and with the ``--re`` argument.  Files that end in ``.reliq`` will be
-parsed as ReasonML Liquidity files. The decompiler will ouptu files in
+parsed as ReasonML Liquidity files. The decompiler will ouptut files in
 ReasonML syntax when given the flag ``-re``. If your file is
 ``test.reliq``, you can compile it using::
 
@@ -1181,43 +1181,43 @@ be converted to ReasonML syntax::
   $ liquidity --convert test19.liq
   %version
   0.5;
-  
+
   type storage = {
     key,
     hash: bytes,
     c: address,
   };
-  
+
   let%init storage: storage = {
     key: 0x0085b1e4560f47f089d7b97aabcf46937a4c137a9c3f96f73f20c83621694e36d5,
     hash: 0xabcdef,
     c: KT1LLcCCB9Fr1hrkGzfdiJ9u3ZajbdckBFrF,
   };
-  
+
   contract PlusOne = {
     type storage = int;
-  
+
     type t =
       | A
       | B;
-  
+
     let%init init_storage = (x: bool, y: int) =>
       if (x == false) {
         0;
       } else {
         y;
       };
-  
+
     let%entry main = (_: unit, s) => ([], s + 1);
   };
-  
+
   let%entry main = (sign: signature, storage) => {
     let x = PlusOne.A;
     switch (x) {
     | PlusOne.B => failwith()
     | _ => ()
     };
-  
+
     let key_hash = Crypto.hash_key(storage.key);
     if (key_hash == tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx) {
       Current.failwith();
@@ -1236,7 +1236,7 @@ be converted to ReasonML syntax::
       | None => Current.failwith()
       | Some(qr) => qr
       };
-  
+
     let delegatable = false;
     let _cocococ: option(PlusOne.instance) = Contract.at(storage.c);
     let _cocococ2 = PlusOne.at(storage.c);
@@ -1253,7 +1253,7 @@ be converted to ReasonML syntax::
         ~storage=9,
         (contract PlusOne),
       );
-  
+
     let storage = storage.c = c_addr;
     ([account_op, c_op], storage);
   };
@@ -1279,13 +1279,13 @@ the changes in the OCaml syntax:
 
 A good way to learn this syntax is to use the syntax conversion
 argument of the compiler (``--convert FILE``).
-  
+
 From Michelson to Liquidity
 ---------------------------
 
 Here is a table of how Michelson instructions translate to Liquidity:
 
-  
+
 * ``ADDRESS``: ``Contract.address addr``
 * ``AMOUNT``: ``Current.amount()``
 * ``ABS``: ``match%nat x with Plus n -> | Minus n -> n``
@@ -1453,7 +1453,7 @@ Type:
 * Type ``->`` Type
 * ``_``
 * LIDENT
-  
+
 Constant:
 
 * ``tz1`` B58Char+(33)

@@ -36,7 +36,7 @@ Tuples can be deconstructed::
 Records
 -------
 
-Record types can be declared and used inside a liquidity contract::
+Record types can be declared and used inside a Liquidity contract::
 
  type storage = {
    x : string;
@@ -69,8 +69,8 @@ declaration::
 
 Variants can be created using::
 
- let x = X 3 in
- let y = Z s in
+ let x = X in
+ let y = Z ("hello", 3) in
  ...
 
 The ``match`` construct can be used to pattern-match on them, but only
@@ -81,7 +81,7 @@ on the first constructor::
  | Y i -> ...
  | Z s -> ...
 
-where ``i`` and ``s`` are variables that are bound by the construct to the
+where ``i`` and ``s`` are variables that are bound by the constructor to the
 parameter of the variant.
 
 Parameters of variants can also be deconstructed when they are tuples,
@@ -144,9 +144,9 @@ or the ``|>`` operator::
 A toplevel function can also be defined before the main entry point::
 
  [%%version 0.2]
- 
+
  let succ x = x + 1
- 
+
  let%entry main ... =
    ...
    let one = succ 0 in
@@ -187,8 +187,8 @@ be written as::
 Also note that polymorphic functions will be monomorphised in Michelson,
 which will duplicate the function for each of its type and thus generate
 larger code.
- 
- 
+
+
 Loops
 -----
 
@@ -207,4 +207,3 @@ a closure do::
 As shown in this example, the body of the loop returns a pair, whose first
 part is the condition to remain in the loop, and the second part is the
 accumulator.
-
